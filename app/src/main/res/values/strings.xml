@@ -1,0 +1,39 @@
+<resources>
+    //Database
+    <string name="database_name">remember.db</string>
+    //Main Activity
+    <string name="fab_description">Create Memory</string>
+    <string name="app_name">Remember</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    //Bottom navigation bar
+    <string name="recents">Recents</string>
+    <string name="cateories">Categories</string>
+    <string name="all_memories">All Memories</string>
+    //fragment 1
+    //Create memory
+    <string name="create_memory_title">Create A New Memory</string>
+    <string name="save_button">Save</string>
+    <string name="memory_title">Title</string>
+    <string name="memory_description">Description</string>
+    <string name="memory_category">Select a category..</string>
+    <string name="memory_image">Upload an image (optional)</string>
+    <string name="memory_image_description">Image placeholder or current image selected</string>
+    //Update memory
+    <string name="update_memory_title">Update a memory</string>
+    //Create memory errors
+    <string name="title_empty">"Title cannot be empty"</string>
+    <string name="description_empty">"Description cannot be empty"</string>
+    <string name="category_list_empty">"You need to have at least 1 category"</string>
+    <string name="category_not_selected">Choose a category</string>
+    //View memory
+    <string name="view_memory">Memory Details</string>
+    <string name="view_photo_description">Image placeholder or image attached</string>
+    //Delete memory dialog
+    <string name="confirm_delete_dialog">Delete</string>
+    <string name="confirm_delete_message">Delete this memory?</string>
+    <string name="positive_button_delete">Yes</string>
+    <string name="negative_button_delete">No</string>
+    <string name="memory_deleted_toast">Memory deleted</string>
+    <string name="delete_failed_toast">Failed to delete</string>
+</resources>
