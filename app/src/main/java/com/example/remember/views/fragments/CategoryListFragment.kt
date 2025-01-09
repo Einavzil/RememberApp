@@ -1,4 +1,4 @@
-package com.example.remember
+package com.example.remember.views.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,12 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.remember.R
+import com.example.remember.controllers.CategoryListController
 import com.example.remember.models.CategoryModel
+import com.example.remember.models.DatabaseHelper
+import com.example.remember.models.repositories.MemoryRepositoryImpl
+import com.example.remember.views.CategoryListView
+import com.example.remember.views.adapters.CategoryAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class CategoriesFragment : Fragment(R.layout.fragment_second) {
+class CategoryListFragment : Fragment(R.layout.fragment_second), CategoryListView {
 
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var controller: CategoryListController
     private lateinit var categories: List<CategoryModel>
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: CategoryAdapter
@@ -35,23 +41,22 @@ class CategoriesFragment : Fragment(R.layout.fragment_second) {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.cateories)
 
-        dbHelper = DatabaseHelper(requireContext(), getString(R.string.database_name))
-        categories = (dbHelper.getCategories())
+        val dbHelper = DatabaseHelper(requireContext(), getString(R.string.database_name))
+        val repository = MemoryRepositoryImpl(dbHelper)
+        controller = CategoryListController(repository, this)
 
         recyclerView = view.findViewById(R.id.category_list_rv)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = CategoryAdapter(categories.toList()) { category ->
-            showEditDialog(category, dbHelper)
-        }
-        recyclerView.adapter = adapter
+
+        refreshCategories()
 
         val fab = view.findViewById<FloatingActionButton>(R.id.floatingActionButton)
         fab.setOnClickListener() {
-            showEditDialog(null, dbHelper)
+            showEditDialog(null)
         }
     }
 
-    private fun showEditDialog(category: CategoryModel?, dbHelper: DatabaseHelper) {
+    private fun showEditDialog(category: CategoryModel?) {
         val editText = EditText(requireContext())
         var title = "Create category"
         if (category != null) {
@@ -66,9 +71,9 @@ class CategoriesFragment : Fragment(R.layout.fragment_second) {
                 val newCategoryName = editText.text.toString().trim()
                 if (newCategoryName.isNotEmpty()) {
                     if (category != null) {
-                    dbHelper.updateCategory(category.id, newCategoryName) }
+                        controller.updateCategory(category.id, newCategoryName) }
                     else {
-                        dbHelper.insertCategory(newCategoryName)
+                        controller.insertCategory(newCategoryName)
                     }
                     //refreshing categories here, since existing AlertDialog will not trigger onResume
                     refreshCategories()
@@ -81,14 +86,16 @@ class CategoriesFragment : Fragment(R.layout.fragment_second) {
             .setNegativeButton("Cancel", null)
             .create()
             .show()
-
     }
 
     private fun refreshCategories() {
-        categories = dbHelper.getCategories().toList()
+        controller.loadCategories()
+    }
 
-        adapter = CategoryAdapter(categories) {category ->
-            showEditDialog(category, dbHelper)
+    override fun updateCategories(categories: List<CategoryModel>) {
+        this.categories = categories
+        adapter = CategoryAdapter(this.categories) { category ->
+            showEditDialog(category)
         }
         recyclerView.adapter = adapter
     }

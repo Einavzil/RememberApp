@@ -1,4 +1,4 @@
-package com.example.remember
+package com.example.remember.views
 
 import android.content.Context
 import android.content.Intent
@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.remember.DatabaseHelper
+import com.example.remember.R
 import com.example.remember.models.CategoryModel
 import com.example.remember.models.MemoryModel
 import com.google.android.material.appbar.MaterialToolbar

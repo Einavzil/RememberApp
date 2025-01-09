@@ -1,9 +1,10 @@
-package com.example.remember
+package com.example.remember.views
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.fragment.app.Fragment
+import androidx.navigation.ui.AppBarConfiguration
+import com.example.remember.R
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

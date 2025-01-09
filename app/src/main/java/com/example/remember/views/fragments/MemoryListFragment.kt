@@ -1,4 +1,4 @@
-package com.example.remember
+package com.example.remember.views.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,12 +12,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.remember.R
+import com.example.remember.controllers.MemoryListController
+import com.example.remember.models.DatabaseHelper
 import com.example.remember.models.MemoryModel
+import com.example.remember.models.repositories.MemoryRepositoryImpl
+import com.example.remember.views.MemoryListView
+import com.example.remember.views.activities.CreateMemoryActivity
+import com.example.remember.views.activities.ViewMemoryActivity
+import com.example.remember.views.adapters.MemoryAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MemoriesFragment : Fragment() {
+class MemoryListFragment : Fragment(), MemoryListView {
 
-    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var controller: MemoryListController
     private lateinit var memoryList: List<MemoryModel>
     private lateinit var adapter: MemoryAdapter
     private lateinit var recyclerView: RecyclerView
@@ -37,18 +45,14 @@ class MemoriesFragment : Fragment() {
 
         (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.all_memories)
 
-        dbHelper = DatabaseHelper(requireContext(), getString(R.string.database_name))
-        memoryList = (dbHelper.getMemories(true))
+        val dbHelper = DatabaseHelper(requireContext(), getString(R.string.database_name))
+        val repository = MemoryRepositoryImpl(dbHelper)
+        controller = MemoryListController(repository, this)
 
         recyclerView = view.findViewById(R.id.memory_rv)
         recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = MemoryAdapter(requireContext(), memoryList) {memory ->
-            val intent = Intent(requireContext(), ViewMemoryActivity::class.java).apply {
-                //pass the memory ID to the intent to fetch more details
-                putExtra("memoryId", memory.id)
-            }
-            startActivity(intent)
-        }
+
+        refreshMemoryList()
 
         val fab = view.findViewById<FloatingActionButton>(R.id.floatingActionButton)
         fab.setOnClickListener() {
@@ -79,15 +83,7 @@ class MemoriesFragment : Fragment() {
 
     private fun refreshMemoryList() {
         //get updated list from db and re-initializing the adapter
-        memoryList = dbHelper.getMemories(true)
-        adapter = MemoryAdapter(requireContext(), memoryList) { memory ->
-            val intent = Intent(requireContext(), ViewMemoryActivity::class.java).apply {
-                putExtra("memoryId", memory.id)
-            }
-            startActivity(intent)
-        }
-        //setting the updated adapter
-        recyclerView.adapter = adapter
+        controller.loadMemories()
     }
 
     private fun sortMemoriesByCategory() {
@@ -98,6 +94,17 @@ class MemoriesFragment : Fragment() {
             }
             startActivity(intent)
         }
+        recyclerView.adapter = adapter
+    }
+    override fun populateMemoriesDetails(memories: List<MemoryModel>) {
+        memoryList = memories
+        adapter = MemoryAdapter(requireContext(), memoryList) { memory ->
+            val intent = Intent(requireContext(), ViewMemoryActivity::class.java).apply {
+                putExtra("memoryId", memory.id)
+            }
+            startActivity(intent)
+        }
+        //setting the updated adapter
         recyclerView.adapter = adapter
     }
 }

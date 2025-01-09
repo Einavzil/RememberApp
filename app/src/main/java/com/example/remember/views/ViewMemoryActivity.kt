@@ -1,4 +1,4 @@
-package com.example.remember
+package com.example.remember.views
 
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.remember.DatabaseHelper
+import com.example.remember.R
 import com.example.remember.models.MemoryModel
 import com.google.android.material.appbar.MaterialToolbar
 
@@ -92,7 +94,7 @@ class ViewMemoryActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.confirm_delete_dialog))
             .setMessage(getString(R.string.confirm_delete_message))
-            .setPositiveButton(getString(R.string.positive_button_delete)) {_, _ ->
+            .setPositiveButton(getString(R.string.positive_button_delete)) { _, _ ->
                 if (dbHelper.deleteMemory(memoryId)) {
                     Toast.makeText(this, getString(R.string.memory_deleted_toast), Toast.LENGTH_SHORT).show()
                     finish()

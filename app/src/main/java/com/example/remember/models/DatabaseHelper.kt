@@ -1,11 +1,9 @@
-package com.example.remember
+package com.example.remember.models
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.remember.models.CategoryModel
-import com.example.remember.models.MemoryModel
 
 open class DatabaseHelper(context: Context, dbName: String) : SQLiteOpenHelper(context, dbName, null, 1) {
 

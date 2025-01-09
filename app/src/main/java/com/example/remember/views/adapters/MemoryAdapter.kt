@@ -1,8 +1,7 @@
-package com.example.remember
+package com.example.remember.views.adapters
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.remember.R
 import com.example.remember.models.MemoryModel
 
 class MemoryAdapter(
