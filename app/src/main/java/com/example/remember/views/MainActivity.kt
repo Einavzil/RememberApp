@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.ui.AppBarConfiguration
 import com.example.remember.R
+import com.example.remember.views.fragments.CategoryListFragment
+import com.example.remember.views.fragments.MemoryListFragment
+import com.example.remember.views.fragments.RecentMemoriesFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -22,24 +25,24 @@ class MainActivity : AppCompatActivity() {
 
         //Setting the default view when opening the app
         if (savedInstanceState == null) {
-            replaceFragment(RecentsFragment())
+            replaceFragment(RecentMemoriesFragment())
         }
 
         //setting up a button listener for each button on the navigation bar
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.fragment1 -> {
-                    replaceFragment(RecentsFragment())
+                    replaceFragment(RecentMemoriesFragment())
                     true
                 }
 
                 R.id.fragment2 -> {
-                    replaceFragment(CategoriesFragment())
+                    replaceFragment(CategoryListFragment())
                     true
                 }
 
                 R.id.fragment3 -> {
-                    replaceFragment(MemoriesFragment())
+                    replaceFragment(MemoryListFragment())
                     true
                 }
 

@@ -3,6 +3,7 @@ package com.example.remember
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.remember.models.CategoryModel
+import com.example.remember.models.DatabaseHelper
 import com.example.remember.models.MemoryModel
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
