@@ -16,6 +16,7 @@ import com.example.remember.models.FileHandler
 import com.example.remember.models.MemoryModel
 import com.example.remember.models.repositories.MemoryRepositoryImpl
 import com.example.remember.views.CreateMemoryView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 class CreateMemoryActivity : AppCompatActivity(), CreateMemoryView {
@@ -59,7 +60,13 @@ class CreateMemoryActivity : AppCompatActivity(), CreateMemoryView {
         findViewById<Button>(R.id.save_button).setOnClickListener {
             saveMemory()
         }
+        var topAppBar: MaterialToolbar = findViewById(R.id.topAppBar)
+        topAppBar.title = getString(R.string.create_memory_title)
 
+        //exit button click listener
+        topAppBar.setNavigationOnClickListener {
+            finish()
+        }
         // Set up image picker button
         findViewById<Button>(R.id.upload_image_button).setOnClickListener {
             pickImage()
