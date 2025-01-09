@@ -78,11 +78,24 @@ class CreateMemoryActivity : AppCompatActivity(), CreateMemoryView {
         val description = descriptionInput.text.toString().trim()
         val selectedCategoryName = categoryDropDown.text.toString().trim()
         val selectedCategory = categories.find { it.name == selectedCategoryName }
-
+        //several checks to ensure fields are not empty
+        if (titleInput.text.toString().trim().isEmpty()) {
+            titleInput.error = getString(R.string.title_empty)
+            return
+        }
+        if (descriptionInput.text.toString().trim().isEmpty()) {
+            descriptionInput.error = getString(R.string.description_empty)
+            return
+        }
+        if (categoryDropDown.text.toString().trim().isEmpty()) {
+            categoryDropDown.error = getString(R.string.category_not_selected)
+            return
+        }
         if (selectedCategory == null) {
             showError("Please select a valid category!")
             return
         }
+
 
         val memory = MemoryModel(
             id = memoryId,
