@@ -111,14 +111,19 @@ class CreateMemoryActivityTest {
     }
     @Test
     fun testSaveButtonClick_addMemory() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val dbHelper = DatabaseHelper(context, "remember.db")
+
         // Arrange: Set up user inputs for title, description, category, and image
         onView(withId(R.id.title_input))
             .perform(clearText(), replaceText("Thailand Vacation"), closeSoftKeyboard())
         onView(withId(R.id.description_input)).perform(typeText("Had an amazing time exploring!"), closeSoftKeyboard())
         onView(withId(R.id.category_dropdown)).perform(click())
+
+        val firstCategory = dbHelper.getCategories().first()
         onView(allOf(
             isAssignableFrom(android.widget.TextView::class.java),
-            withText("Travel"),
+            withText(firstCategory.name),
             isDisplayed()
         )).inRoot(isPlatformPopup()).perform(click())
 
@@ -126,14 +131,12 @@ class CreateMemoryActivityTest {
         onView(withId(R.id.save_button)).perform(click())
 
         // Assert: Verify the memory is added to the database
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val dbHelper = DatabaseHelper(context, "remember.db")
         val memories = dbHelper.getMemories(true)
         val savedMemory = memories.find { it.title == "Thailand Vacation" }
 
         assertNotNull(savedMemory)
         assertEquals("Had an amazing time exploring!", savedMemory?.description)
-        assertEquals("Travel", savedMemory?.category?.name)
+        assertEquals(firstCategory.name, savedMemory?.category?.name)
     }
 
     // test that the pickImage button launches an intent with type image/*

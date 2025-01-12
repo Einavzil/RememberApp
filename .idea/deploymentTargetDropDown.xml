@@ -11,6 +11,9 @@
       <entry key="DatabaseHelperTest">
         <State />
       </entry>
+      <entry key="Tests in 'com.example.remember'">
+        <State />
+      </entry>
       <entry key="app">
         <State>
           <targetSelectedWithDropDown>
@@ -27,10 +30,7 @@
           <timeTargetWasSelectedWithDropDown value="2024-12-20T14:05:58.053975100Z" />
         </State>
       </entry>
-      <entry key="testAddNewCategory()">
-        <State />
-      </entry>
-      <entry key="testEditCategory()">
+      <entry key="testSaveButtonClick_addMemory()">
         <State />
       </entry>
     </value>
