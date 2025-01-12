@@ -2,6 +2,12 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="CategoriesFragmentTest">
+        <State />
+      </entry>
+      <entry key="CreateMemoryActivityTest">
+        <State />
+      </entry>
       <entry key="DatabaseHelperTest">
         <State />
       </entry>
@@ -21,16 +27,10 @@
           <timeTargetWasSelectedWithDropDown value="2024-12-20T14:05:58.053975100Z" />
         </State>
       </entry>
-      <entry key="deleteMemory_shouldRemoveTheCorrectMemory()">
+      <entry key="testAddNewCategory()">
         <State />
       </entry>
-      <entry key="insertCategory_shouldInsert_NewCategoryToDatabase()">
-        <State />
-      </entry>
-      <entry key="testPickImageIntent()">
-        <State />
-      </entry>
-      <entry key="updateMemory_shouldUpdateTheCorrectColumns()">
+      <entry key="testEditCategory()">
         <State />
       </entry>
     </value>

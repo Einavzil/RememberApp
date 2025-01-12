@@ -33,7 +33,8 @@ class CategoriesFragment : Fragment(R.layout.fragment_second) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = getString(R.string.cateories)
+        // Check if the activity is an AppCompatActivity before using the ActionBar. Needed for testing purposes
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.cateories)
 
         dbHelper = DatabaseHelper(requireContext(), getString(R.string.database_name))
         categories = (dbHelper.getCategories())
@@ -75,7 +76,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_second) {
 
                 }
                 else {
-                    Toast.makeText(requireContext(), "Category can't be empty", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Category can't be empty", Toast.LENGTH_LONG).show()
                 }
             }
             .setNegativeButton("Cancel", null)
